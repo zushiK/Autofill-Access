@@ -1,0 +1,200 @@
+<?php
+
+namespace DummyNamespace;
+
+
+use App\Http\Controllers\Controller;
+use App\Http\RequestsDummyNM\DummyModelRequest;
+use App\Http\ResourcesDummyNM\DummyModelResource;
+use App\ServicesDummyNM\DummyModelService;
+use Illuminate\Http\Request;
+
+class DummyClass extends Controller
+{
+    /**
+     * @var DummyModelService
+     */
+    private $service;
+
+    /**
+     * @param DummyModelService $repository
+     */
+    public function __construct(DummyModelService $service)
+    {
+        $this->service = $service;
+    }
+
+    /**
+     * @OA\GET(
+     *     path="/DummyLowerModel",
+     *     tags={"DummyLowerModel"},
+     *     security={{"bearerAuth":{}}},
+     *     description="DummyModel index",
+     *     @OA\Response(
+     *          response="default",
+     *          description="APIエラー時の返却データ",
+     *          )
+     *     )
+     * ),
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        return DummyModelResource::collection(
+            $this->service->paginate($request->perpage ?? 10)
+        );
+    }
+
+    /**
+     * @OA\post(
+     *      path="/DummyLowerModel",
+     *      tags={"DummyLowerModel"},
+     *      summary="Find DummyModel",
+     *      security={{"bearerAuth":{}}},
+     *      description="DummyModel store",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400, 
+     *          description="Bad request"
+     *      ),
+     *      @OA\Response(
+     *          response=404, 
+     *          description="Resource Not Found"
+     *      ),
+     * )
+     *
+     * @param  DummyModelRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(DummyModelRequest $request)
+    {
+        return new DummyModelResource(
+            $this->service->create($request->validated())
+        );
+    }
+
+    /**
+     * @OA\get(
+     *      path="/DummyLowerModel/{id}",
+     *      tags={"DummyLowerModel"},
+     *      summary="Find DummyModel",
+    *      security={{"bearerAuth":{}}},
+     *      description="DummyModel index",
+     *      @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Id of DummyLowerModel return",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             format="int64"
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400, 
+     *          description="Bad request"
+     *      ),
+     *      @OA\Response(
+     *          response=404, 
+     *          description="Resource Not Found"
+     *      )
+     * )
+     *
+     * @param  string $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return new DummyModelResource($this->service->find($id));
+    }
+
+    /**
+     * @OA\put(
+     *      path="/DummyLowerModel/{id}",
+     *      tags={"DummyLowerModel"},
+     *      summary="Update DummyModel",
+    *      security={{"bearerAuth":{}}},
+     *      description="DummyModel update",
+     *      @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Id of DummyLowerModel return",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             format="int64"
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400, 
+     *          description="Bad request"
+     *      ),
+     *      @OA\Response(
+     *          response=404, 
+     *          description="Resource Not Found"
+     *      ),
+     * )
+     *
+     * @param  CustomerRequest  $request
+     * @param  string $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(DummyModelRequest $request, $id)
+    {
+        $a = $this->service->update($id, $request->validated());
+        return new DummyModelResource($a);
+    }
+
+    /**
+     * @OA\delete(
+     *      path="/DummyLowerModel/{id}",
+     *      tags={"DummyLowerModel"},
+     *      summary="Delete DummyModel",
+     *      security={{"bearerAuth":{}}},
+     *      description="DummyModel delete",
+     *      @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Id of DummyLowerModel return",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             format="int64"
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      @OA\Response(
+     *          response=400, 
+     *          description="Bad request"
+     *      ),
+     *      @OA\Response(
+     *          response=404, 
+     *          description="Resource Not Found"
+     *      ),
+     * )
+     *
+     * @param  string $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $a = $this->service->delete($id);
+        return new DummyModelResource($a);
+    }
+}

@@ -1,12 +1,12 @@
 <?php
 
-namespace DummyNamespace;
+namespace App\Models\Front;
 
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class DummyClass extends Model
+class User extends Model
 {
     use SoftDeletes;
 
@@ -14,7 +14,7 @@ class DummyClass extends Model
 
     protected $keyType = 'string'; // ← 追加
 
-    protected $table = 'DummySnakeModel';
+    protected $table = 'users';
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 

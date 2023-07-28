@@ -1,24 +1,24 @@
 <?php
 
-namespace DummyNamespace;
+namespace App\Http\Controllers\Front;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\RequestsDummyNM\DummyModelRequest;
-use App\ServicesDummyNM\DummyModelService;
+use App\Http\Requests\Front\UserRequest;
+use App\Services\Front\UserService;
 use Illuminate\Http\Request;
 
-class DummyClass extends Controller
+class UserController extends Controller
 {
     /**
-     * @var DummyModelService
+     * @var UserService
      */
     private $service;
 
     /**
-     * @param DummyModelService $repository
+     * @param UserService $repository
      */
-    public function __construct(DummyModelService $service)
+    public function __construct(UserService $service)
     {
         $this->service = $service;
     }
@@ -30,7 +30,7 @@ class DummyClass extends Controller
     public function index(Request $request)
     {
         $datas = $this->service->paginate($request->perpage ?? 10);
-        return view("DummyDotNm.DummyLowerModel.index", compact("datas"));
+        return view("front.user.index", compact("datas"));
     }
 
     /**
@@ -40,7 +40,7 @@ class DummyClass extends Controller
     public function show($id)
     {
         $data = $this->service->find($id);
-        return view("DummyDotNm.DummyLowerModel.show", compact("data"));
+        return view("front.user.show", compact("data"));
     }
 
     /**
@@ -48,14 +48,14 @@ class DummyClass extends Controller
      */
     public function create()
     {
-        return view("DummyDotNm.DummyLowerModel.create");
+        return view("front.user.create");
     }
 
     /**
-     * @param  DummyModelRequest  $request
+     * @param  UserRequest  $request
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function store(DummyModelRequest $request)
+    public function store(UserRequest $request)
     {
         $this->service->create($request->validated());
         return redirect()->back()->withInput()->with("success", "保存しました");
@@ -67,7 +67,7 @@ class DummyClass extends Controller
     public function edit($id)
     {
         $data = $this->service->find($id);
-        return view("DummyDotNm.DummyLowerModel.create", compact("data"));
+        return view("front.user.create", compact("data"));
     }
 
     /**
@@ -75,7 +75,7 @@ class DummyClass extends Controller
      * @param  string $id
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function update(DummyModelRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $a = $this->service->update($id, $request->validated());
         return redirect()->back()->withInput()->with("success", "更新しました");
@@ -88,6 +88,6 @@ class DummyClass extends Controller
     public function destroy($id)
     {
         $a = $this->service->delete($id);
-        return redirect(route("DummyDotNm.DummyLowerModel.index"))->withInput()->with("success", "削除しました");
+        return redirect(route("user.index"))->withInput()->with("success", "削除しました");
     }
 }

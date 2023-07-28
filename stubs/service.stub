@@ -2,10 +2,10 @@
 
 namespace DummyNamespace;
 
-use App\Services\Service;
+use App\Services\AbstractService;
 use App\RepositoriesDummyNM\DummyModelRepository;
 
-class DummyClass extends Service
+class DummyClass extends AbstractService
 {
     /**
      * @var DummyModelRepository

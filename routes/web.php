@@ -17,8 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix("user")
-    ->as("user.")
+Route::prefix("user")->as("user.")
     ->controller(\App\Http\Controllers\Front\UserController::class)->group(function () {
         Route::get("/", "index")->name("index");
         Route::get("/create", "create")->name("create");

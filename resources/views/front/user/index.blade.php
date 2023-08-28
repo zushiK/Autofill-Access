@@ -19,3 +19,5 @@ Index
         </li>
     @endforeach
 </ul>
+
+<img src="{{ asset('assets/icons/add_fill.svg') }}" width="90" height="90" alt="SVG画像" />

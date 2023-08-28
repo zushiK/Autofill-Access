@@ -3,13 +3,11 @@
 namespace App\Models\Front;
 
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
-    use SoftDeletes;
-
     public $incrementing = false; // ← 追加
 
     protected $keyType = 'string'; // ← 追加

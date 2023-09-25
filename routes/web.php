@@ -13,33 +13,31 @@ use Laravel\Socialite\Facades\Socialite;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\Front\DashboardController::class, 'index'])->name('dashboard.index');
 
-Route::controller(\App\Http\Controllers\Auth\AuthController::class)
-    ->group(function () {
-        Route::get("login",  "login")->name("login");
-        Route::get("loout",  "logout")->name("logout");
-    });
+// Route::controller(\App\Http\Controllers\Auth\AuthController::class)
+//     ->group(function () {
+//         Route::get("login",  "login")->name("login");
+//         Route::get("loout",  "logout")->name("logout");
+//     });
 
 /**
  * ソーシャルログイン
  */
-Route::prefix("/auth/{provider}")->group(function () {
-    Route::get("redirect", function ($provider) {
-        return Socialite::driver($provider)->with(['prompt' => 'consent'])->redirect();
-    })->where('provider', implode("|", config("services.allow_socialite_list")))->name("login.social");
-    Route::get(
-        'callback',
-        [\App\Http\Controllers\Auth\SocialiteController::class, "callback"]
-    )->where('provider', implode("|", config("services.allow_socialite_list")));
-});
+// Route::prefix("/auth/{provider}")->group(function () {
+//     Route::get("redirect", function ($provider) {
+//         return Socialite::driver($provider)->with(['prompt' => 'consent'])->redirect();
+//     })->where('provider', implode("|", config("services.allow_socialite_list")))->name("login.social");
+//     Route::get(
+//         'callback',
+//         [\App\Http\Controllers\Auth\SocialiteController::class, "callback"]
+//     )->where('provider', implode("|", config("services.allow_socialite_list")));
+// });
 
 
-Route::middleware("auth")->group(function () {
-    Route::view("dashboard", "front.dashboard")->name("dashboard");
-});
+// Route::middleware("auth")->group(function () {
+//     Route::view("dashboard", "front.dashboard")->name("dashboard");
+// });
 
 // Route::prefix("user")->as("user.")
 // ->controller(\App\Http\Controllers\Front\UserController::class)->group(function () {

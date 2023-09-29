@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Front\UserRequest;
 use App\Services\Front\UserService;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -25,12 +26,12 @@ class UserController extends Controller
 
     /**
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     * @return \Inertia\Response
      */
     public function index(Request $request)
     {
         $datas = $this->service->paginate($request->perpage ?? 10);
-        return view("front.user.index", compact("datas"));
+        return inertia("front/user/index", compact("datas"));
     }
 
     /**
